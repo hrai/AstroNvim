@@ -17,10 +17,10 @@ return {
   { "marko-cerovac/material.nvim" ,
     lazy = false, -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other start plugins
-    config = function()
-      -- load the colorscheme here
-      vim.cmd([[colorscheme material]])
-      vim.g.material_style = "deep ocean"
+    config = function(_, opts)
+        vim.g.material_style = "darker"
+        require("material").setup(opts)
+        vim.cmd 'colorscheme material'
     end,
   }, --colorscheme
   { "Pocco81/auto-save.nvim" },
