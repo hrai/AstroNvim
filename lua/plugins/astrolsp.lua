@@ -40,13 +40,13 @@ return {
     },
     -- enable servers that you already have installed without mason
     servers = {
-  "powershell_es",
-  "lua_ls",
-  "pyright",
-  "jsonls",
-  "yamlls",
-  "bashls",
-  "csharp_ls",
+      "powershell_es",
+      "lua_ls",
+      "pyright",
+      "jsonls",
+      "yamlls",
+      "bashls",
+      "csharp_ls",
     },
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
