@@ -81,10 +81,10 @@ vim.cmd([[
 nnoremap <space> :
 
 " Smart way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+" map <C-j> <C-W>j
+" map <C-k> <C-W>k
+" map <C-h> <C-W>h
+" map <C-l> <C-W>l
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
