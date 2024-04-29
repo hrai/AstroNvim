@@ -224,6 +224,31 @@ return {
       return opts
     end,
   },
+  {
+    "folke/which-key.nvim",
+    opts = function(_, opts)
+      opts.ignore_missing = true --hide any mapping for which you didn't explicitly defined a label
+
+      --[[
+      local wk = require "which-key"
+      wk.register({
+        ['"'] = { 'ysiw"', "Wrap the word under the cursor in double quotes" },
+        ["'"] = { "ysiw'", "Wrap the word under the cursor in single quotes" },
+        ["("] = { "ysiw(", "Wrap the word under the cursor in brackets, but with spaces around the word" },
+        [")"] = { "ysiw)", "Wrap the word under the cursor in brackets" },
+        ["["] = { "ysiw[", "Wrap the word under the cursor in square brackets, but with spaces around the word" },
+        ["]"] = { "ysiw]", "Wrap the word under the cursor in square brackets" },
+        ["{"] = { "ysiw{", "Wrap the word under the cursor in curly brackets, but with spaces around the word" },
+        ["}"] = { "ysiw}", "Wrap the word under the cursor in curly brackets" },
+        ["`"] = { "ysiw`", "Wrap the word under the cursor in backticks" },
+      }, {
+        prefix = "<leader>",
+      })
+      ]]
+      --
+      return opts
+    end,
+  },
 
   --[[
   {
