@@ -24,13 +24,12 @@ require "polish"
 
 ----------------------- ASTRO NVIM CONFIG ENDS -------------------------------------
 
-
 -- vim options
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.relativenumber = true
 
-vim.cmd([[
+vim.cmd [[
 
 nmap <C-s> :w<cr>
 
@@ -75,9 +74,9 @@ augroup END
 
 autocmd VimLeavePre *.notes call GitCommitPush('cleanup')
 
-]])
+]]
 
-vim.cmd([[
+vim.cmd [[
 nnoremap <space> :
 
 " Smart way to move between windows
@@ -152,9 +151,9 @@ command! Gconf :e ~/.gitconfig
 command! Gignore :e ~/.gitignore
 command! Bconf :e ~/.bashrc
 command! Tconf :e ~/.tmux.conf
-]])
+]]
 
-vim.cmd([[
+vim.cmd [[
 " This section contains custom methods
 
 function! Push_Config()
@@ -267,10 +266,9 @@ nmap cab :call ModifyAroundBrackets("change")<CR>
 nmap vab :call ModifyAroundBrackets("select")<CR>
 nmap yab :call ModifyAroundBrackets("yank")<CR>
 
-]])
+]]
 
-
-vim.cmd([[
+vim.cmd [[
 """"""Plugins""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -313,11 +311,11 @@ nmap <leader>e :Neotree<cr>
 
 " => gitlinker settings
 command! Gblame :GitLink!
-]])
+]]
 
 ----------------------- TELESCOPE CONFIG -------------------------
 
-vim.cmd([[
+vim.cmd [[
 " FindRootDirectory is from https://github.com/airblade/vim-rooter
 nmap <expr> <leader>n ':Telescope find_files cwd='.FindRootDirectory().'/<cr>'
 nmap <leader>t :Telescope oldfiles<cr>
@@ -327,14 +325,14 @@ nmap <expr> <leader>cf ':Telescope grep_string cwd='.FindRootDirectory().'/<cr>'
 
 " nnoremap p "0p
 nnoremap pl :Telescope neoclip<cr>
-]])
+]]
 
-local actions = require("telescope.actions")
-require("telescope").setup{
+local actions = require "telescope.actions"
+require("telescope").setup {
   defaults = {
     mappings = {
       i = {
-        ["<esc>"] = actions.close
+        ["<esc>"] = actions.close,
       },
     },
   },
@@ -344,10 +342,10 @@ require("telescope").setup{
         i = {
           ----------- Mapping <C-d> to delete buffer --------
           ["<c-d>"] = actions.delete_buffer + actions.move_to_top,
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+  },
 }
 
 -------------- Falling back to find_files if git_files can't find a .git directory ----------
@@ -382,15 +380,15 @@ return M
 -- example keymap:
 -- vim.api.nvim_set_keymap("n", "<Leader><Space>", "<CMD>lua require'telescope-config'.project_files()<CR>", {noremap = true, silent = true})
 
-]]--
+]]
+--
 
 ----------------------- TELESCOPE CONFIG END -------------------------
-
 
 ----------------------- NVIM-TREESITTER CONFIG -------------------------
 require("nvim-treesitter.install").prefer_git = true
 
-require("nvim-treesitter.configs").setup({
+require("nvim-treesitter.configs").setup {
   textobjects = {
     select = {
       enable = true,
@@ -418,7 +416,7 @@ require("nvim-treesitter.configs").setup({
       -- mapping query_strings to modes.
       selection_modes = {
         ["@parameter.outer"] = "v", -- charwise
-        ["@function.outer"] = "V",  -- linewise
+        ["@function.outer"] = "V", -- linewise
         ["@class.outer"] = "<c-v>", -- blockwise
       },
       -- If you set this to `true` (default is `false`) then any textobject is
@@ -433,18 +431,18 @@ require("nvim-treesitter.configs").setup({
       include_surrounding_whitespace = true,
     },
   },
-})
+}
 
 ----------------------- NVIM-TREESITTER CONFIG END -------------------------
 
 if
-    package.config:sub(1, 1) == "\\" --if OS is Windows
+  package.config:sub(1, 1) == "\\" --if OS is Windows
 then
   -- Enable powershell as your default shell
   vim.opt.shell = "pwsh.exe -NoLogo"
   vim.opt.shellcmdflag =
-  "-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
-  vim.cmd([[
+    "-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
+  vim.cmd [[
 		  let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
 		  let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
 		  set shellquote= shellxquote=
@@ -464,55 +462,32 @@ then
         \   'cache_enabled': 0,
         \ }
 
-    ]])
+    ]]
 else
-  vim.cmd([[
+  vim.cmd [[
       nnoremap <leader>c :e ~/.config/nvim/init.lua<cr>
 
       command! FormatJson :%!jq .
-    ]])
+    ]]
 end
 
-require("lspconfig").lua_ls.setup({
-  settings = {
-    workspace = { checkThirdParty = false },
-  },
-})
+-- require("lspconfig").lua_ls.setup {
+--   settings = {
+--     workspace = { checkThirdParty = false },
+--   },
+-- }
 
 require("mason-lspconfig").setup {
-    ensure_installed = {
-        "powershell_es",
-      "lua_ls",
-      "pyright",
-      "jsonls",
-      "yamlls",
-      "bashls",
-      -- "csharp_ls",
-        "vimls",
-        "tsserver",
-        "graphql",
- },
+  ensure_installed = {
+    "powershell_es",
+    "lua_ls",
+    "pyright",
+    "jsonls",
+    "yamlls",
+    "bashls",
+    -- "csharp_ls",
+    "vimls",
+    "tsserver",
+    "graphql",
+  },
 }
-
-local null_ls = require("null-ls")
-
-null_ls.setup({
-    debug=true,
-    sources = {
-        null_ls.builtins.formatting.stylua,
-        null_ls.builtins.formatting.prettierd.with({
-			filetypes = {
-				"css",
-				"scss",
-				"less",
-				"html",
-				"json",
-				"yaml",
-				"markdown",
-				"graphql",
-			},
-		}),
-        require("none-ls.diagnostics.eslint_d"),
-        null_ls.builtins.completion.spell,
-    },
-})
