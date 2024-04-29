@@ -306,9 +306,6 @@ vmap  <M-x>  <Plug>(dial-decrement)
 vmap g<M-a> g<Plug>(dial-increment)
 vmap g<M-x> g<Plug>(dial-decrement)
 
-" => neotree settings
-nmap <leader>e :Neotree<cr>
-
 " => gitlinker settings
 command! Gblame :GitLink!
 ]]
