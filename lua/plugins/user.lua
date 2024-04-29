@@ -250,6 +250,21 @@ return {
     end,
   },
 
+  { "nvim-neo-tree/neo-tree.nvim", enabled = false },
+  {
+    "nvim-tree/nvim-tree.lua",
+    version = "*",
+    lazy = false,
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+    },
+    config = function()
+      require("nvim-tree").setup {
+        -- global
+        vim.api.nvim_set_keymap("n", "<leader>e", ":NvimTreeToggle<cr>", { silent = true, noremap = true }),
+      }
+    end,
+  },
   --[[
   {
     "williamboman/mason-lspconfig.nvim",
