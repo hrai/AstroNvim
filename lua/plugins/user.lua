@@ -215,9 +215,9 @@ return {
         "    ██   ████   ████   ██ ██      ██",
       }
       opts.section.buttons.val = {
-        opts.button("e", "  > New file", ":ene <BAR> startinsert <CR>"),
-        opts.button("f", "  > Find file", ":cd $HOME/Workspace | Telescope find_files<CR>"),
         opts.button("r", "  > Recent", ":Telescope oldfiles<CR>"),
+        opts.button("f", "  > Find file", ":cd $HOME/Workspace | Telescope find_files<CR>"),
+        opts.button("e", "  > New file", ":ene <BAR> startinsert <CR>"),
         opts.button("s", "  > Settings", ":e $MYVIMRC | :cd %:p:h | split . | wincmd k | pwd<CR>"),
         opts.button("q", "  > Quit NVIM", ":qa<CR>"),
       }
@@ -260,9 +260,28 @@ return {
     },
     config = function()
       require("nvim-tree").setup {
-        -- global
-        vim.api.nvim_set_keymap("n", "<leader>e", ":NvimTreeToggle<cr>", { silent = true, noremap = true }),
+        view = { relativenumber = true },
       }
+    end,
+    init = function()
+      -- global
+      vim.api.nvim_set_keymap("n", "<leader>e", ":NvimTreeToggle<cr>", { silent = true, noremap = true })
+
+      -- autoclose if last buffer
+      vim.api.nvim_create_autocmd("BufEnter", {
+        group = vim.api.nvim_create_augroup("NvimTreeClose", { clear = true }),
+        pattern = "NvimTree_*",
+        callback = function()
+          local layout = vim.api.nvim_call_function("winlayout", {})
+          if
+            layout[1] == "leaf"
+            and vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(layout[2]), "filetype") == "NvimTree"
+            and layout[3] == nil
+          then
+            vim.cmd "confirm quit"
+          end
+        end,
+      })
     end,
   },
   --[[
