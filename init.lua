@@ -478,3 +478,41 @@ require("lspconfig").lua_ls.setup({
     workspace = { checkThirdParty = false },
   },
 })
+
+require("mason-lspconfig").setup {
+    ensure_installed = {
+        "powershell_es",
+      "lua_ls",
+      "pyright",
+      "jsonls",
+      "yamlls",
+      "bashls",
+      -- "csharp_ls",
+        "vimls",
+        "tsserver",
+        "graphql",
+ },
+}
+
+local null_ls = require("null-ls")
+
+null_ls.setup({
+    debug=true,
+    sources = {
+        null_ls.builtins.formatting.stylua,
+        null_ls.builtins.formatting.prettierd.with({
+			filetypes = {
+				"css",
+				"scss",
+				"less",
+				"html",
+				"json",
+				"yaml",
+				"markdown",
+				"graphql",
+			},
+		}),
+        require("none-ls.diagnostics.eslint_d"),
+        null_ls.builtins.completion.spell,
+    },
+})

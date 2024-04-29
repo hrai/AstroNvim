@@ -171,7 +171,28 @@ return {
                 desc = "Select context-aware indent (inner, entire range)",
             },
         },
-    }
+    },
+    {
+        "nvimtools/none-ls.nvim",
+        dependencies = {
+          "nvimtools/none-ls-extras.nvim",
+        },
+      },
+    --[[
+    {
+    "nvimtools/none-ls.nvim",
+    config = function()
+        require("null-ls").setup({
+    sources = {
+        null_ls.builtins.formatting.stylua,
+        null_ls.builtins.diagnostics.eslint,
+        null_ls.builtins.completion.spell,
+    },
+})
+    end,
+    requires = { "nvim-lua/plenary.nvim" },
+}
+]]--
 }
 
 --[[
