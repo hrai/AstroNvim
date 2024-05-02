@@ -31,6 +31,28 @@ vim.opt.relativenumber = true
 
 vim.cmd [[
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Files, backups and undo
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" set nowb
+set noswapfile
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Default directory settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let vim_folder = ''
+if has("win32")
+    let $vim_folder="~/AppData/Local/nvim/"
+else
+    let $vim_folder="~/.config/nvim/"
+endif
+
+let &backupdir=$vim_folder . 'temp_dirs/undodir'
+let &directory=$vim_folder . 'temp_dirs/undodir'
+let &undodir=$vim_folder . 'temp_dirs/undodir'
+]]
+
+vim.cmd [[
 nmap <C-s> :w<cr>
 
 nmap <Tab> :bnext<CR>
