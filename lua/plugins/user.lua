@@ -218,7 +218,8 @@ return {
         opts.button("r", "  > Recent", ":Telescope oldfiles<CR>"),
         opts.button("f", "  > Find file", ":cd $HOME/Workspace | Telescope find_files<CR>"),
         opts.button("e", "  > New file", ":ene <BAR> startinsert <CR>"),
-        opts.button("c", "  > Config/Settings", ":e $MYVIMRC | :cd %:p:h | split . | wincmd k | pwd<CR>"),
+        opts.button("c", "  > Config/Settings", ":e $MYVIMRC<CR>"),
+        -- opts.button("c", "  > Config/Settings", ":e $MYVIMRC | :cd %:p:h | split . | wincmd k | pwd<CR>"),
         opts.button("q", "  > Quit NVIM", ":qa<CR>"),
       }
       return opts
