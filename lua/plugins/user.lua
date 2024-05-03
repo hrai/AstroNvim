@@ -285,6 +285,7 @@ return {
       })
     end,
   },
+  { "jvgrootveld/telescope-zoxide" },
   --[[
   {
     "williamboman/mason-lspconfig.nvim",

@@ -52,6 +52,10 @@ let &undodir=g:vim_folder . 'temp_dirs/undodir'
 ]]
 
 vim.cmd [[
+
+"change working directory to current opened file
+autocmd BufEnter * silent! lcd %:p:h
+
 nmap <C-s> :w<cr>
 
 nmap <Tab> :bnext<CR>
