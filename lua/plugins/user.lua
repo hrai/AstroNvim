@@ -74,21 +74,39 @@ return {
   {
     "tzachar/cmp-tabnine",
     after = "nvim-cmp",
-    -- build = function()
-    --     if jit.os == "Linux" then
-    --         print("Executing install.sh...")
-    --         vim.cmd [[execute ":! ~/.local/share/lunarvim/site/pack/lazy/opt/cmp-tabnine/install.sh"]]
-    --     else
-    --         print("Executing install.ps1...")
-    --         EXECUTE BELOW...
-    --         pwsh "$HOME\AppData\Roaming\lunarvim\site\pack\lazy\opt\cmp-tabnine\install.ps1"
-    --         vim.cmd [[execute ":! pwsh -File $HOME\\AppData\\Roaming\\lunarvim\\site\\pack\\packer\\start\\cmp-tabnine\\install.ps1"]]
-    --         -- vim.cmd [[execute ":! pwsh -Command pwd"]]
-    --         print("Executed install.ps1...")
-    --     end
-    -- end,
     build = get_tabnine_build_string(),
     dependencies = "hrsh7th/nvim-cmp",
+    config = function()
+      require("cmp_tabnine.config"):setup {
+        max_lines = 1000,
+        max_num_results = 30,
+        sort = true,
+        run_on_every_keystroke = true,
+        snippet_placeholder = "🚀",
+        ignored_file_types = {
+          -- default is not to ignore
+          -- uncomment to ignore in lua:
+          -- lua = true
+        },
+        show_prediction_strength = false,
+      }
+    end,
+  },
+  {
+    "hrsh7th/nvim-cmp",
+    -- dependencies = "tzachar/cmp-tabnine",
+    opts = function(_, opts)
+      local cmp = require "cmp"
+      opts.sources = cmp.config.sources {
+        { name = "nvim_lsp", priority = 1000 },
+        { name = "luasnip", priority = 900 },
+        { name = "buffer", priority = 800 },
+        { name = "cmp_tabnine", priority = 750 },
+        { name = "path", priority = 700 },
+        { name = "emoji", priority = 650 },
+      }
+      return opts
+    end,
   },
   "nvim-treesitter/nvim-treesitter",
   opts = {
