@@ -116,7 +116,7 @@ map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 nmap <leader>tn :tabnew<cr>
 
 " Switch CWD to the directory of the open buffer
-map <leader>cd :cd %:p:h<cr>:pwd<cr>
+" map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
 command! BufOnly silent! execute "%bd|e#|bd#"
 map <leader>bo BufOnly
@@ -498,6 +498,14 @@ end
 --     workspace = { checkThirdParty = false },
 --   },
 -- }
+
+-- make sure to run this code before calling setup()
+-- refer to the full lists at https://github.com/folke/which-key.nvim/blob/main/lua/which-key/plugins/presets/init.lua
+local presets = require "which-key.plugins.presets"
+presets.operators["v"] = nil
+presets.operators["c"] = nil
+presets.operators["y"] = nil
+presets.operators["<"] = nil
 
 require("mason-lspconfig").setup {
   ensure_installed = {
