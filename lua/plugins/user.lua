@@ -251,41 +251,53 @@ return {
       return opts
     end,
   },
-
-  { "nvim-neo-tree/neo-tree.nvim", enabled = false },
   {
-    "nvim-tree/nvim-tree.lua",
-    version = "*",
-    lazy = false,
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
-    },
-    config = function()
-      require("nvim-tree").setup {
-        view = { relativenumber = true },
-      }
-    end,
+    "nvim-neo-tree/neo-tree.nvim",
     init = function()
       -- global
-      vim.api.nvim_set_keymap("n", "<leader>e", ":NvimTreeToggle<cr>", { silent = true, noremap = true })
-
-      -- autoclose if last buffer
-      vim.api.nvim_create_autocmd("BufEnter", {
-        group = vim.api.nvim_create_augroup("NvimTreeClose", { clear = true }),
-        pattern = "NvimTree_*",
-        callback = function()
-          local layout = vim.api.nvim_call_function("winlayout", {})
-          if
-            layout[1] == "leaf"
-            and vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(layout[2]), "filetype") == "NvimTree"
-            and layout[3] == nil
-          then
-            vim.cmd "confirm quit"
-          end
-        end,
-      })
+      vim.api.nvim_set_keymap("n", "<leader>e", ":Neotree<cr>", { silent = true, noremap = true })
     end,
   },
+  -- {
+  --   "nvim-tree/nvim-tree.lua",
+  --   version = "*",
+  --   lazy = false,
+  --   dependencies = {
+  --     "nvim-tree/nvim-web-devicons",
+  --   },
+  --   config = function()
+  --     require("nvim-tree").setup {
+  --       view = { relativenumber = true },
+  --       -- sync_root_with_cwd=true,
+  --       actions = {
+  --           change_dir = {
+  --               enable = true,
+  --               -- global = true,
+  --           },
+  --       },
+  --     }
+  --   end,
+  --   init = function()
+  --     -- global
+  --     vim.api.nvim_set_keymap("n", "<leader>e", ":NvimTreeToggle<cr>", { silent = true, noremap = true })
+  --
+  --     -- autoclose if last buffer
+  --     vim.api.nvim_create_autocmd("BufEnter", {
+  --       group = vim.api.nvim_create_augroup("NvimTreeClose", { clear = true }),
+  --       pattern = "NvimTree_*",
+  --       callback = function()
+  --         local layout = vim.api.nvim_call_function("winlayout", {})
+  --         if
+  --           layout[1] == "leaf"
+  --           and vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(layout[2]), "filetype") == "NvimTree"
+  --           and layout[3] == nil
+  --         then
+  --           vim.cmd "confirm quit"
+  --         end
+  --       end,
+  --     })
+  --   end,
+  -- },
   {
     "jvgrootveld/telescope-zoxide",
     dependencies = {
