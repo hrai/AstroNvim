@@ -505,6 +505,7 @@ end
 local presets = require "which-key.plugins.presets"
 presets.operators["v"] = nil
 presets.operators["c"] = nil
+presets.operators["p"] = nil
 presets.operators["y"] = nil
 presets.operators["<"] = nil
 
