@@ -46,6 +46,11 @@ else
     let g:vim_folder=expand("~/.config/nvim/")
 endif
 
+set backup
+if !isdirectory(g:vim_folder)
+    silent! execute "!mkdir " . g:vim_folder > /dev/null 2>&1
+endif
+
 let &backupdir=g:vim_folder . 'temp_dirs/undodir'
 let &directory=g:vim_folder . 'temp_dirs/undodir'
 let &undodir=g:vim_folder . 'temp_dirs/undodir'
