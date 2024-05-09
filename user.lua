@@ -139,7 +139,6 @@ return {
     config = function()
       vim.cmd [[
               let g:rooter_patterns = ['.git', '.svn', 'package.json', '!node_modules']
-              let g:rooter_silent_chdir = 1
               ]]
     end,
   },
@@ -310,5 +309,5 @@ return {
       vim.keymap.set("n", "<leader>cd", require("telescope").extensions.zoxide.list)
     end,
   },
-  -- { "rebelot/heirline.nvim", enabled = false },
+  { "rebelot/heirline.nvim", disabled = true },
 }
