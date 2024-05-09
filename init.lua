@@ -40,10 +40,10 @@ set noswapfile
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Default directory settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if has("win32")
-    let g:vim_folder="~/AppData/Local/nvim/"
+if has("win32") " || expand("%:p:h") =~ 'mnt'
+    let g:vim_folder=expand("~/AppData/Local/nvim/")
 else
-    let g:vim_folder="~/.config/nvim/"
+    let g:vim_folder=expand("~/.config/nvim/")
 endif
 
 let &backupdir=g:vim_folder . 'temp_dirs/undodir'
