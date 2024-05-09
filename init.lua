@@ -470,6 +470,7 @@ then
 		  set shellquote= shellxquote=
 
       nnoremap <leader>c :e ~/AppData/Local/nvim/init.lua<cr>
+      nnoremap <leader>p :e ~/AppData/Local/nvim/lua/plugins/user.lua<cr>
 
       let g:clipboard = {
         \   'name': 'WslClipboard',
