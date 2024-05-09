@@ -58,9 +58,6 @@ let &undodir=g:vim_folder . 'temp_dirs/undodir'
 
 vim.cmd [[
 
-"change working directory to current opened file
-autocmd BufEnter * silent! lcd %:p:h
-
 nmap <C-s> :w<cr>
 
 nmap <Tab> :bnext<CR>
@@ -69,7 +66,8 @@ nmap <S-Tab> :bprevious<CR>
 au BufReadPost *.notes set filetype=txt
 autocmd BufEnter * if &filetype == "" | setlocal ft=text | endif
 
-autocmd VimEnter * set autochdir
+"change working directory to current opened file
+" autocmd VimEnter * set autochdir "Doesn't work due to vim-rooter
 
 " Tmux auto dir change
 autocmd DirChanged * call chansend(v:stderr, printf("\033]7;file://%s\033\\", v:event.cwd))
@@ -494,6 +492,7 @@ then
 else
   vim.cmd [[
       nnoremap <leader>c :e ~/.config/nvim/init.lua<cr>
+      nnoremap <leader>p :e ~/.config/nvim/lua/plugins/user.lua<cr>
 
       command! FormatJson :%!jq .
     ]]
