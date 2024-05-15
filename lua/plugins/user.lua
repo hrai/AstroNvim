@@ -140,6 +140,7 @@ return {
       vim.cmd [[
               let g:rooter_patterns = ['.git', '.svn', 'package.json', '!node_modules']
               let g:rooter_silent_chdir = 1
+              let g:rooter_change_directory_for_non_project_files = 'current' "Change to file's directory (similar to autochdir).
               ]]
     end,
   },
