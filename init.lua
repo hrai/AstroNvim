@@ -527,3 +527,11 @@ require("mason-lspconfig").setup {
     "graphql",
   },
 }
+
+-- vim-rooter alternative for nvim 10.x
+-- vim.api.nvim_create_autocmd("BufEnter", {
+--   callback = function(ctx)
+--     local root = vim.fs.root(ctx.buf, { ".git", ".svn", "package.json", "!node_modules", "Makefile" })
+--     if root then vim.uv.chdir(root) end
+--   end,
+-- })
