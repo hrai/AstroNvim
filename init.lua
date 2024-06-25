@@ -74,7 +74,7 @@ autocmd DirChanged * call chansend(v:stderr, printf("\033]7;file://%s\033\\", v:
 autocmd VimLeave * call chansend(v:stderr, "\033]7;\033\\")
 
 function! UpdateVim()
-  :LvimUpdate
+  " :LvimUpdate
   :Lazy sync
 endfunction
 nmap <leader>pu :call UpdateVim()<cr>
