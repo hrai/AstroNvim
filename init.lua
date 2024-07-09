@@ -73,6 +73,12 @@ autocmd BufEnter * if &filetype == "" | setlocal ft=text | endif
 autocmd DirChanged * call chansend(v:stderr, printf("\033]7;file://%s\033\\", v:event.cwd))
 autocmd VimLeave * call chansend(v:stderr, "\033]7;\033\\")
 
+function! CleanWindowsLineBreak()
+  " :LvimUpdate
+  :%s/\r//g
+endfunction
+command! CleanWindowsLineBreak call CleanWindowsLineBreak()
+
 function! UpdateVim()
   " :LvimUpdate
   :Lazy sync
