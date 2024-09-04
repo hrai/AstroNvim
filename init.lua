@@ -474,31 +474,32 @@ then
   vim.opt.shellcmdflag =
     "-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
   vim.cmd [[
-		  let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-		  let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-		  set shellquote= shellxquote=
+    let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+    let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+    set shellquote= shellxquote=
 
-      nnoremap <leader>c :e ~/AppData/Local/nvim/init.lua<cr>
-      nnoremap <leader>p :e ~/AppData/Local/nvim/lua/plugins/user.lua<cr>
-
-      let g:clipboard = {
-        \   'name': 'WslClipboard',
-        \   'copy': {
-        \      '+': 'clip.exe',
-        \      '*': 'clip.exe',
-        \    },
-        \   'paste': {
-        \      '+': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-        \      '*': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-        \   },
-        \   'cache_enabled': 0,
-        \ }
+    nnoremap <leader>c :e ~/AppData/Local/nvim/init.lua<cr>
+    nnoremap <leader>p :e ~/AppData/Local/nvim/lua/plugins/user.lua<cr>
 
     ]]
 else
   vim.cmd [[
-      nnoremap <leader>c :e ~/.config/nvim/init.lua<cr>
-      nnoremap <leader>p :e ~/.config/nvim/lua/plugins/user.lua<cr>
+    nnoremap <leader>c :e ~/.config/nvim/init.lua<cr>
+    nnoremap <leader>p :e ~/.config/nvim/lua/plugins/user.lua<cr>
+
+    set clipboard=unnamedplus
+    let g:clipboard = {
+                \   'name': 'WslClipboard',
+                \   'copy': {
+                \      '+': 'clip.exe',
+                \      '*': 'clip.exe',
+                \    },
+                \   'paste': {
+                \      '+': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+                \      '*': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+                \   },
+                \   'cache_enabled': 0,
+                \ }
 
       command! FormatJson :%!jq .
     ]]
