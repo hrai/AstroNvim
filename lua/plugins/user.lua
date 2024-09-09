@@ -248,10 +248,11 @@ return {
   },
   {
     "folke/which-key.nvim",
-    opts = function(_, opts)
-      opts.ignore_missing = true --hide any mapping for which you didn't explicitly defined a label
-      return opts
-    end,
+    enabled = false, --disable/Disabling Plugins
+    -- opts = function(_, opts)
+    -- opts.ignore_missing = true --hide any mapping for which you didn't explicitly defined a label
+    -- return opts
+    -- end,
   },
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -259,6 +260,10 @@ return {
       -- global
       vim.api.nvim_set_keymap("n", "<leader>e", ":Neotree<cr>", { silent = true, noremap = true })
     end,
+  },
+  {
+    "mbbill/undotree",
+    init = function() vim.api.nvim_set_keymap("n", "<F5>", ":UndotreeToggle<cr>", { silent = true, noremap = true }) end,
   },
   -- {
   --   "nvim-tree/nvim-tree.lua",
