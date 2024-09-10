@@ -326,5 +326,10 @@ return {
     init = function() vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" }) end,
     -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
   },
+  {
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    dependencies = { "nvim-lua/plenary.nvim" },
+  },
   -- { "rebelot/heirline.nvim", enabled = false },
 }
