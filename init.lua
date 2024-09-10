@@ -403,7 +403,7 @@ local function toggle_telescope(harpoon_files)
     :find()
 end
 
-vim.keymap.set("n", "<C-e>", function() toggle_telescope(harpoon:list()) end, { desc = "Open harpoon window" })
+vim.keymap.set("n", "<C-o>", function() toggle_telescope(harpoon:list()) end, { desc = "Open harpoon window" })
 vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
 
 -------------- Falling back to find_files if git_files can't find a .git directory ----------
