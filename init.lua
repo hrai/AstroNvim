@@ -557,7 +557,7 @@ require("mason-lspconfig").setup {
     "bashls",
     -- "csharp_ls",
     "vimls",
-    "tsserver",
+    "ts_ls",
     "graphql",
   },
 }
