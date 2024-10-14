@@ -328,6 +328,7 @@ let g:gtfo#terminals = { 'win': 'pwsh.exe -NoLogo -NoExit -Command' }
 let g:vim_json_syntax_conceal = 0
 
 " => lightspeed settings
+unmap s
 nmap <leader>o <Plug>Lightspeed_s
 
 " => dial settings
