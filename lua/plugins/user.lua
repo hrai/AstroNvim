@@ -105,6 +105,10 @@ return {
         { name = "path", priority = 700 },
         { name = "emoji", priority = 650 },
       }
+      opts.completion = {
+        completeopt = "menu,menuone,noinsert",
+      }
+
       return opts
     end,
   },
