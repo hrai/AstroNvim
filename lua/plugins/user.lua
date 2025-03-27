@@ -1,13 +1,3 @@
-local function get_tabnine_build_string()
-  if vim.fn.has "win32" == 1 then
-    -- use special windows path
-    return "pwsh.exe -file .\\install.ps1"
-  else
-    -- unix path
-    return "./install.sh"
-  end
-end
-
 return {
   {
     "folke/trouble.nvim",
@@ -72,27 +62,6 @@ return {
   { "uga-rosa/cmp-dictionary", dependencies = { "hrsh7th/nvim-cmp" } },
   { "monaqa/dial.nvim" },
   {
-    "tzachar/cmp-tabnine",
-    after = "nvim-cmp",
-    build = get_tabnine_build_string(),
-    dependencies = "hrsh7th/nvim-cmp",
-    config = function()
-      require("cmp_tabnine.config"):setup {
-        max_lines = 1000,
-        max_num_results = 30,
-        sort = true,
-        run_on_every_keystroke = true,
-        snippet_placeholder = "🚀",
-        ignored_file_types = {
-          -- default is not to ignore
-          -- uncomment to ignore in lua:
-          -- lua = true
-        },
-        show_prediction_strength = false,
-      }
-    end,
-  },
-  {
     "hrsh7th/nvim-cmp",
     -- dependencies = "tzachar/cmp-tabnine",
     opts = function(_, opts)
@@ -101,7 +70,6 @@ return {
         { name = "nvim_lsp", priority = 1000 },
         { name = "luasnip", priority = 900 },
         { name = "buffer", priority = 800 },
-        { name = "cmp_tabnine", priority = 750 },
         { name = "path", priority = 700 },
         { name = "emoji", priority = 650 },
       }
