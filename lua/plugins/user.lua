@@ -66,6 +66,7 @@ return {
       {
         "Kaiser-Yang/blink-cmp-dictionary",
         dependencies = { "nvim-lua/plenary.nvim" },
+        -- "mikavilpas/blink-ripgrep.nvim",
       },
       -- ... Other dependencies
     },
@@ -76,6 +77,7 @@ return {
           lsp = { score_offset = 4 },
           snippets = { score_offset = -1 },
           buffer = { score_offset = 2 },
+          -- ripgrep = { score_offset = 0 },
           dictionary = {
             score_offset = 3,
             module = "blink-cmp-dictionary",
