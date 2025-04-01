@@ -60,28 +60,37 @@ return {
     config = function() require("nvim-lastplace").setup {} end,
   },
   { "monaqa/dial.nvim" },
-  -- add this to the file where you setup your other plugins:
-  -- { "uga-rosa/cmp-dictionary", dependencies = { "hrsh7th/nvim-cmp" } },
-  -- {
-  --   "hrsh7th/nvim-cmp",
-  --   -- dependencies = "tzachar/cmp-tabnine",
-  --   opts = function(_, opts)
-  --     local cmp = require "cmp"
-  --
-  --     opts.sources = cmp.config.sources {
-  --       { name = "nvim_lsp", priority = 1000 },
-  --       { name = "luasnip", priority = 900 },
-  --       { name = "buffer", priority = 800 },
-  --       { name = "path", priority = 700 },
-  --       { name = "emoji", priority = 650 },
-  --     }
-  --     opts.completion = {
-  --       completeopt = "menu,menuone,noinsert",
-  --     }
-  --
-  --     return opts
-  --   end,
-  -- },
+  { -- override blink.cmp plugin
+    "Saghen/blink.cmp",
+    dependencies = {
+      {
+        "Kaiser-Yang/blink-cmp-dictionary",
+        dependencies = { "nvim-lua/plenary.nvim" },
+      },
+      -- ... Other dependencies
+    },
+    opts = {
+      sources = {
+        providers = {
+          path = { score_offset = 1 },
+          lsp = { score_offset = 4 },
+          snippets = { score_offset = -1 },
+          buffer = { score_offset = 2 },
+          dictionary = {
+            score_offset = 3,
+            module = "blink-cmp-dictionary",
+            name = "Dict",
+            -- Make sure this is at least 2.
+            -- 3 is recommended
+            min_keyword_length = 3,
+            opts = {
+              -- options for blink-cmp-dictionary
+            },
+          },
+        },
+      },
+    },
+  },
   {
     "monkoose/neocodeium",
     event = "VeryLazy",
@@ -93,15 +102,17 @@ return {
       vim.keymap.set("i", "<Right>", function() neocodeium.accept() end, { silent = true, noremap = true })
     end,
   },
-  "nvim-treesitter/nvim-treesitter",
-  opts = {
-    ensure_installed = { "comment", "markdown_inline", "regex", "python" },
-    auto_install = true,
-    highlight = {
-      enable = false,
-    },
-    indent = {
-      enable = false,
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+      ensure_installed = { "comment", "markdown_inline", "regex", "python" },
+      auto_install = true,
+      highlight = {
+        enable = false,
+      },
+      indent = {
+        enable = false,
+      },
     },
   },
   {
