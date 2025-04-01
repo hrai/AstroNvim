@@ -5,15 +5,13 @@
 ---@type LazySpec
 return {
   "nvim-treesitter/nvim-treesitter",
-  opts = function(_, opts)
-    -- add more things to the ensure_installed table protecting against community packs modifying it
-    opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, {
+  opts = {
+    ensure_installed = {
       "lua",
       "vim",
       -- add more arguments for adding more treesitter parsers
-    })
-
-    opts.highlight = {
+    },
+    highlight = {
       enable = true,
       -- disable treesitter for large files
       disable = function(lang, bufnr) --
@@ -21,6 +19,6 @@ return {
         return vim.api.nvim_buf_line_count(bufnr) > 10000 and (lang == "cpp" or lang == "c" or lang == "csv")
       end,
       additional_vim_regex_highlighting = false,
-    }
-  end,
+    },
+  },
 }
