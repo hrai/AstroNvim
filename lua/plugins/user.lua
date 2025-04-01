@@ -63,33 +63,11 @@ return {
   { "monaqa/dial.nvim" },
   -- add this to the file where you setup your other plugins:
   {
-    "monkoose/neocodeium",
-    event = "VeryLazy",
-    config = function()
-      local neocodeium = require "neocodeium"
-
-      neocodeium.setup {
-        manual = true, -- recommended to not conflict with nvim-cmp
-      }
-
-      -- create an autocommand which closes cmp when ai completions are displayed
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "NeoCodeiumCompletionDisplayed",
-        callback = function() require("cmp").abort() end,
-      })
-
-      -- set up some sort of keymap to cycle and complete to trigger completion
-      -- vim.keymap.del("i", "<A-e>")
-      vim.keymap.set("i", "<A-n>", function() neocodeium.cycle_or_complete() end, { silent = true, noremap = true })
-      -- make sure to have a mapping to accept a completion
-      vim.keymap.set("i", "<A-a>", function() neocodeium.accept() end, { silent = true, noremap = true })
-    end,
-  },
-  {
     "hrsh7th/nvim-cmp",
     -- dependencies = "tzachar/cmp-tabnine",
     opts = function(_, opts)
       local cmp = require "cmp"
+
       opts.sources = cmp.config.sources {
         { name = "nvim_lsp", priority = 1000 },
         { name = "luasnip", priority = 900 },
@@ -104,6 +82,42 @@ return {
       return opts
     end,
   },
+  {
+    "monkoose/neocodeium",
+    event = "VeryLazy",
+    config = function()
+      local cmp = require "cmp"
+      local neocodeium = require "neocodeium"
+
+      cmp.event:on("menu_opened", function() neocodeium.clear() end)
+
+      neocodeium.setup {
+        filter = function() return not cmp.visible() end,
+      }
+
+      cmp.setup {
+        completion = {
+          autocomplete = false,
+        },
+      }
+      -- neocodeium.setup {
+      --   manual = true, -- recommended to not conflict with nvim-cmp
+      -- }
+
+      --   -- create an autocommand which closes cmp when ai completions are displayed
+      --   vim.api.nvim_create_autocmd("User", {
+      --     pattern = "NeoCodeiumCompletionDisplayed",
+      --     callback = function() require("cmp").abort() end,
+      --   })
+
+      -- set up some sort of keymap to cycle and complete to trigger completion
+      -- vim.keymap.del("i", "<A-e>")
+      vim.keymap.set("i", "<A-n>", function() neocodeium.cycle_or_complete() end, { silent = true, noremap = true })
+      -- make sure to have a mapping to accept a completion
+      vim.keymap.set("i", "<Right>", function() neocodeium.accept() end, { silent = true, noremap = true })
+    end,
+  },
+
   "nvim-treesitter/nvim-treesitter",
   opts = {
     ensure_installed = { "comment", "markdown_inline", "regex", "python" },
