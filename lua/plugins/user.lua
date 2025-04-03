@@ -107,6 +107,8 @@ return {
     "monkoose/neocodeium",
     event = "VeryLazy",
     config = function()
+      local neocodeium = require "neocodeium"
+      neocodeium.setup()
       -- set up some sort of keymap to cycle and complete to trigger completion
       -- vim.keymap.del("i", "<A-e>")
       vim.keymap.set("i", "<A-n>", function() neocodeium.cycle_or_complete() end, { silent = true, noremap = true })
