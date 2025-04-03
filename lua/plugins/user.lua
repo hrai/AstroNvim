@@ -112,8 +112,7 @@ return {
       -- set up some sort of keymap to cycle and complete to trigger completion
       -- vim.keymap.del("i", "<A-e>")
       vim.keymap.set("i", "<A-n>", function() neocodeium.cycle_or_complete() end, { silent = true, noremap = true })
-      -- make sure to have a mapping to accept a completion
-      vim.keymap.set("i", "<Right>", function() neocodeium.accept() end, { silent = true, noremap = true })
+      vim.keymap.set("i", "<A-a>", function() neocodeium.accept() end, { silent = true, noremap = true })
     end,
   },
   {
