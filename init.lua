@@ -494,23 +494,33 @@ require("nvim-treesitter.configs").setup {
 
 ----------------------- NVIM-TREESITTER CONFIG END -------------------------
 
-if
-  package.config:sub(1, 1) == "\\" --if OS is Windows
-then
-  -- Enable powershell as your default shell
-  vim.opt.shell = "pwsh.exe -NoLogo"
-  vim.opt.shellcmdflag =
-    "-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
-  vim.cmd [[
-    let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-    let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-    set shellquote= shellxquote=
+local function get_os_type()
+  -- Check for Windows environment variables first
+  if os.getenv "USERPROFILE" then return "other" end
 
-    nnoremap <leader>c :e ~/AppData/Local/nvim/init.lua<cr>
-    nnoremap <leader>p :e ~/AppData/Local/nvim/lua/plugins/user.lua<cr>
+  -- If a Unix-like environment, read the /proc/version file
+  local file = io.open("/proc/version", "r")
+  if file then
+    local content = file:read "*a"
+    file:close()
 
-    ]]
-else
+    local lower_content = string.lower(content)
+
+    -- Check for WSL-specific keywords
+    if string.match(lower_content, "microsoft") or string.match(lower_content, "wsl") then return "wsl" end
+
+    -- If it's a Unix-like system and not WSL, assume it's regular Linux
+    return "linux"
+  end
+
+  -- If /proc/version doesn't exist, it's not a Linux-based system
+  return "other"
+end
+
+-- Example usage:
+local os_type = get_os_type()
+
+if os_type == "wsl" then
   vim.cmd [[
     nnoremap <leader>c :e ~/.config/nvim/init.lua<cr>
     nnoremap <leader>p :e ~/.config/nvim/lua/plugins/user.lua<cr>
@@ -530,6 +540,23 @@ else
                 \ }
 
       command! FormatJson :%!jq .
+    ]]
+elseif os_type == "linux" then
+  print "Running in a standard Linux environment."
+else
+  print "Running in another operating system."
+  -- Enable powershell as your default shell
+  vim.opt.shell = "pwsh.exe -NoLogo"
+  vim.opt.shellcmdflag =
+    "-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
+  vim.cmd [[
+    let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+    let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+    set shellquote= shellxquote=
+
+    nnoremap <leader>c :e ~/AppData/Local/nvim/init.lua<cr>
+    nnoremap <leader>p :e ~/AppData/Local/nvim/lua/plugins/user.lua<cr>
+
     ]]
 end
 
