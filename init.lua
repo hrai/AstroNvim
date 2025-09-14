@@ -560,21 +560,6 @@ else
     ]]
 end
 
--- require("lspconfig").lua_ls.setup {
---   settings = {
---     workspace = { checkThirdParty = false },
---   },
--- }
-
--- make sure to run this code before calling setup()
--- -- refer to the full lists at https://github.com/folke/which-key.nvim/blob/main/lua/which-key/plugins/presets/init.lua
--- local presets = require "which-key.plugins.presets"
--- presets.operators["v"] = nil
--- presets.operators["c"] = nil
--- presets.operators["p"] = nil
--- presets.operators["y"] = nil
--- presets.operators["<"] = nil
-
 require("mason-lspconfig").setup {
   ensure_installed = {
     "powershell_es",
@@ -589,11 +574,3 @@ require("mason-lspconfig").setup {
     "graphql",
   },
 }
-
--- vim-rooter alternative for nvim 10.x
--- vim.api.nvim_create_autocmd("BufEnter", {
---   callback = function(ctx)
---     local root = vim.fs.root(ctx.buf, { ".git", ".svn", "package.json", "!node_modules", "Makefile" })
---     if root then vim.uv.chdir(root) end
---   end,
--- })
