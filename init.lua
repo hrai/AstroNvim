@@ -542,9 +542,9 @@ if os_type == "wsl" then
       command! FormatJson :%!jq .
     ]]
 elseif os_type == "linux" then
-  print "Running in a standard Linux environment."
+  -- print "Running in a standard Linux environment."
 else
-  print "Running in another operating system."
+  -- print "Running in another operating system."
   -- Enable powershell as your default shell
   vim.opt.shell = "pwsh.exe -NoLogo"
   vim.opt.shellcmdflag =
