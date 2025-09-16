@@ -1,4 +1,23 @@
-return {
+------------------------------------------------------------------
+-- don't do anything in non-vscode instances
+------------------------------------------------------------------
+local disabled_plugins = {
+  -- { "williamboman/mason-lspconfig.nvim", enabled = false },
+  -- { "williamboman/mason.nvim", enabled = false },
+  {
+    "folke/which-key.nvim",
+    enabled = false,
+  },
+}
+
+if vim.g.vscode then
+  return disabled_plugins
+else
+  local plugins = {}
+  for _, v in ipairs(disabled_plugins) do
+    table.insert(plugins, v)
+  end
+  for _, v in ipairs({
   {
     "folke/trouble.nvim",
     cmd = "TroubleToggle",
@@ -249,14 +268,6 @@ return {
     end,
   },
   {
-    "folke/which-key.nvim",
-    enabled = false, --disable/Disabling Plugins
-    -- opts = function(_, opts)
-    -- opts.ignore_missing = true --hide any mapping for which you didn't explicitly defined a label
-    -- return opts
-    -- end,
-  },
-  {
     "nvim-neo-tree/neo-tree.nvim",
     init = function()
       -- global
@@ -305,46 +316,6 @@ return {
       },
     },
   },
-  -- {
-  --   "nvim-tree/nvim-tree.lua",
-  --   version = "*",
-  --   lazy = false,
-  --   dependencies = {
-  --     "nvim-tree/nvim-web-devicons",
-  --   },
-  --   config = function()
-  --     require("nvim-tree").setup {
-  --       view = { relativenumber = true },
-  --       -- sync_root_with_cwd=true,
-  --       actions = {
-  --           change_dir = {
-  --               enable = true,
-  --               -- global = true,
-  --           },
-  --       },
-  --     }
-  --   end,
-  --   init = function()
-  --     -- global
-  --     vim.api.nvim_set_keymap("n", "<leader>e", ":NvimTreeToggle<cr>", { silent = true, noremap = true })
-  --
-  --     -- autoclose if last buffer
-  --     vim.api.nvim_create_autocmd("BufEnter", {
-  --       group = vim.api.nvim_create_augroup("NvimTreeClose", { clear = true }),
-  --       pattern = "NvimTree_*",
-  --       callback = function()
-  --         local layout = vim.api.nvim_call_function("winlayout", {})
-  --         if
-  --           layout[1] == "leaf"
-  --           and vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(layout[2]), "filetype") == "NvimTree"
-  --           and layout[3] == nil
-  --         then
-  --           vim.cmd "confirm quit"
-  --         end
-  --       end,
-  --     })
-  --   end,
-  -- },
   {
     "jvgrootveld/telescope-zoxide",
     dependencies = {
@@ -379,8 +350,11 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
   },
-  -- { "rebelot/heirline.nvim", enabled = false },
-}
+  }) do
+    table.insert(plugins, v)
+  end
+  return plugins
+end
 
 --[[
 if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
