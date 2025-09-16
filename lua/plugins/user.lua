@@ -1,5 +1,5 @@
 ------------------------------------------------------------------
--- don't do anything in non-vscode instances
+-- DON'T DO ANYTHING IN NON-VSCODE INSTANCES
 ------------------------------------------------------------------
 local disabled_plugins = {
   -- { "williamboman/mason-lspconfig.nvim", enabled = false },
