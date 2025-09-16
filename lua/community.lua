@@ -5,6 +5,7 @@ if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
 -- This guarantees that the specs are processed before any user plugins.
 
 ---@type LazySpec
+---
 return {
   "AstroNvim/astrocommunity",
   { import = "astrocommunity.pack.lua" },

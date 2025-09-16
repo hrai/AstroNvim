@@ -302,12 +302,17 @@ nmap yab :call ModifyAroundBrackets("yank")<CR>
 
 ]]
 
-vim.cmd [[
-""""""Plugins""""""
+------------------------------------------------------------------
+-----------------------------Plugins------------------------------
+------------------------------------------------------------------
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Fugitive
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+-- don't do anything in non-vscode instances
+if vim.g.vscode then
+  return {}
+end
+
+vim.cmd [[
+" Fugitive config
 nnoremap   gs    :Git status<CR>
 nnoremap   gp    :Git pull<CR>
 nnoremap   gps   :Git push<CR>
