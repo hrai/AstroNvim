@@ -1,0 +1,12 @@
+  ~/.config/nvim
+   .git                    ◌ 
+  󰉋 lua
+  󰉋 temp_dirs               ◌ 
+  󰊢 .gitignore
+  󰘦 .neoconf.json
+   .stylua.toml
+   README.md
+   init.lua                 
+  󰘦 lazy-lock.json
+   neovim.yml
+   selene.toml
