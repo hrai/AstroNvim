@@ -307,9 +307,7 @@ nmap yab :call ModifyAroundBrackets("yank")<CR>
 ------------------------------------------------------------------
 
 -- don't do anything in non-vscode instances
-if vim.g.vscode then
-  return {}
-end
+if vim.g.vscode then return {} end
 
 vim.cmd [[
 " Fugitive config
@@ -579,3 +577,16 @@ require("mason-lspconfig").setup {
     "graphql",
   },
 }
+
+-- Disable NeoCodeium for large files
+vim.api.nvim_create_autocmd("BufReadPre", {
+  callback = function()
+    local max_filesize = 10 * 1024 * 1024 -- 10MB
+    local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(0))
+    if ok and stats and stats.size > max_filesize then
+      pcall(function()
+        vim.cmd "NeoCodeiumDisable" -- If this command exists for Neocodeium
+      end)
+    end
+  end,
+})
