@@ -306,7 +306,7 @@ nmap yab :call ModifyAroundBrackets("yank")<CR>
 -----------------------------Plugins------------------------------
 ------------------------------------------------------------------
 
--- don't do anything in non-vscode instances
+-- don't do anything in vscode instances
 if vim.g.vscode then return {} end
 
 vim.cmd [[
