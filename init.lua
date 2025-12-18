@@ -410,7 +410,6 @@ end
 vim.keymap.set("n", "<C-o>", function() toggle_telescope(harpoon:list()) end, { desc = "Open harpoon window" })
 vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
 
-
 ----------------------- TELESCOPE CONFIG END -------------------------
 
 ----------------------- NVIM-TREESITTER CONFIG -------------------------
