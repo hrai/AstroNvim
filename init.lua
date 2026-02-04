@@ -501,8 +501,8 @@ if os_type == "wsl" then
                 \      '*': 'clip.exe',
                 \    },
                 \   'paste': {
-                \      '+': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-                \      '*': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+                \      '+': 'pwsh.exe -NoProfile -NonInteractive -Command "[Console]::Out.Write((Get-Clipboard -Raw) -replace \"`r\", \"\")"',
+                \      '*': 'pwsh.exe -NoProfile -NonInteractive -Command "[Console]::Out.Write((Get-Clipboard -Raw) -replace \"`r\", \"\")"',
                 \   },
                 \   'cache_enabled': 0,
                 \ }
