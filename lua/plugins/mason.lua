@@ -22,6 +22,8 @@ return {
 
         -- install any other package
         "tree-sitter-cli",
+        "eslint_d",
+        "prettierd",
       },
     },
   },
