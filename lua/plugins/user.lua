@@ -128,11 +128,12 @@ else
         ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
       },
       sources = {
+        default = { "buffer", "lsp", "path", "snippets", "dictionary" },
         providers = {
           path = { score_offset = 1 },
-          lsp = { score_offset = 4 },
+          lsp = { score_offset = 3 , fallbacks = {} },
           snippets = { score_offset = -1 },
-          buffer = { score_offset = 2 },
+          buffer = { score_offset = 5 },
           -- ripgrep = { score_offset = 0 },
           dictionary = {
             score_offset = 3,
