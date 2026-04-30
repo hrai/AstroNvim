@@ -25,6 +25,7 @@ require "polish"
 ----------------------- ASTRO NVIM CONFIG ENDS -------------------------------------
 
 -- vim options
+vim.keymap.set("i", "<C-v>", "<C-r>+", { desc = "Paste from clipboard" })
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.relativenumber = true
