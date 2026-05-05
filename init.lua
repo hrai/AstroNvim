@@ -414,53 +414,32 @@ vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
 ----------------------- TELESCOPE CONFIG END -------------------------
 
 ----------------------- NVIM-TREESITTER CONFIG -------------------------
-require("nvim-treesitter.install").prefer_git = true
+-- Treesitter: conditional setup for Windows vs WSL/Linux
+local is_windows = vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1
+local has_compiler = vim.fn.executable("cl") == 1 or vim.fn.executable("zig") == 1 or vim.fn.executable("gcc") == 1
 
-require("nvim-treesitter.configs").setup {
-  textobjects = {
-    select = {
-      enable = true,
-      -- Automatically jump forward to textobj, similar to targets.vim
-      lookahead = true,
-      keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        -- You can optionally set descriptions to the mappings (used in the desc parameter of
-        -- nvim_buf_set_keymap) which plugins like which-key display
-        ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
-        -- ["ab"] = "@block.outer",
-        -- ["ib"] = "@block.inner",
-        -- You can also use captures from other query groups like `locals.scm`
-        ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
-      },
-      -- You can choose the select mode (default is charwise 'v')
-      --
-      -- Can also be a function which gets passed a table with the keys
-      -- * query_string: eg '@function.inner'
-      -- * method: eg 'v' or 'o'
-      -- and should return the mode ('v', 'V', or '<c-v>') or a table
-      -- mapping query_strings to modes.
-      selection_modes = {
-        ["@parameter.outer"] = "v", -- charwise
-        ["@function.outer"] = "V", -- linewise
-        ["@class.outer"] = "<c-v>", -- blockwise
-      },
-      -- If you set this to `true` (default is `false`) then any textobject is
-      -- extended to include preceding or succeeding whitespace. Succeeding
-      -- whitespace has priority in order to act similarly to eg the built-in
-      -- `ap`.
-      --
-      -- Can also be a function which gets passed a table with the keys
-      -- * query_string: eg '@function.inner'
-      -- * selection_mode: eg 'v'
-      -- and should return true of false
-      include_surrounding_whitespace = true,
-    },
-  },
-}
-
+if is_windows and not has_compiler then
+  -- Windows without compiler: Use Vim syntax files (treesitter disabled)
+  vim.cmd [[
+    syntax enable
+    syntax on
+    filetype plugin indent on
+  ]]
+elseif is_windows and has_compiler then
+  -- Windows with compiler: Configure treesitter
+  require("nvim-treesitter.install").prefer_git = true
+  if vim.fn.executable("cl") == 1 then
+    require("nvim-treesitter.install").compilers = { "cl" }
+  elseif vim.fn.executable("zig") == 1 then
+    require("nvim-treesitter.install").compilers = { "zig" }
+  else
+    require("nvim-treesitter.install").compilers = { "gcc", "clang" }
+  end
+else
+  -- WSL/Linux: Configure treesitter compiler
+  require("nvim-treesitter.install").prefer_git = true
+  require("nvim-treesitter.install").compilers = { "gcc", "clang" }
+end
 ----------------------- NVIM-TREESITTER CONFIG END -------------------------
 
 local function get_os_type()
@@ -529,20 +508,9 @@ else
     ]]
 end
 
-require("mason-lspconfig").setup {
-  ensure_installed = {
-    "powershell_es",
-    "lua_ls",
-    "pyright",
-    "jsonls",
-    "yamlls",
-    "bashls",
-    -- "csharp_ls",
-    "vimls",
-    "ts_ls",
-    "graphql",
-  },
-}
+-- Mason-lspconfig v2 now handles self-registration (v6 migration)
+-- Moved ensure_installed to mason-tool-installer in lua/plugins/mason.lua
+require("mason-lspconfig").setup {}
 
 -- Disable NeoCodeium for large files
 vim.api.nvim_create_autocmd("BufReadPre", {

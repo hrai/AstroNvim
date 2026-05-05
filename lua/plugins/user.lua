@@ -102,63 +102,60 @@ else
   },
   { "monaqa/dial.nvim" },
   { -- override blink.cmp plugin
-    "Saghen/blink.cmp",
+    "saghen/blink.cmp", -- Updated to lowercase (v6 requirement)
+    optional = true, -- Mark as optional to avoid circular dependency
     dependencies = {
+      "saghen/blink.lib", -- Required for blink.cmp v2
       {
         "Kaiser-Yang/blink-cmp-dictionary",
         dependencies = { "nvim-lua/plenary.nvim" },
-        -- "mikavilpas/blink-ripgrep.nvim",
-      },
-      -- ... Other dependencies
-    },
-    opts = {
-      keymap = {
-        preset = "default",
-        ["<Tab>"] = {
-          function(cmp)
-            if cmp.snippet_active() then
-              return cmp.accept()
-            else
-              return cmp.select_and_accept()
-            end
-          end,
-          "snippet_forward",
-          "fallback",
-        },
-        ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
-      },
-      sources = {
-        default = { "buffer", "lsp", "path", "snippets", "dictionary" },
-        providers = {
-          path = { score_offset = 1 },
-          lsp = { score_offset = 3 , fallbacks = {} },
-          snippets = { score_offset = -1 },
-          buffer = { score_offset = 5 },
-          -- ripgrep = { score_offset = 0 },
-          dictionary = {
-            score_offset = 3,
-            module = "blink-cmp-dictionary",
-            name = "Dict",
-            -- Make sure this is at least 2.
-            -- 3 is recommended
-            min_keyword_length = 3,
-            opts = {
-              -- options for blink-cmp-dictionary
-            },
-          },
-        },
-      },
-      completion = {
-        menu = {
-          draw = {
-            columns = {
-              { "kind_icon", "label", "label_description", gap = 1 },
-              { "kind", "source_name", gap = 1 },
-            },
-          },
-        },
       },
     },
+    opts = function(_, opts)
+      -- Safely extend the default opts without causing circular dependency
+      opts.keymap = opts.keymap or {}
+      opts.keymap.preset = "default"
+      opts.keymap["<Tab>"] = {
+        function(cmp)
+          if cmp.snippet_active() then
+            return cmp.accept()
+          else
+            return cmp.select_and_accept()
+          end
+        end,
+        "snippet_forward",
+        "fallback",
+      }
+      opts.keymap["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" }
+
+      -- Configure sources
+      opts.sources = opts.sources or {}
+      opts.sources.default = { "buffer", "lsp", "path", "snippets", "dictionary" }
+      opts.sources.providers = opts.sources.providers or {}
+      opts.sources.providers.path = { score_offset = 1 }
+      opts.sources.providers.lsp = { score_offset = 3, fallbacks = {} }
+      opts.sources.providers.snippets = { score_offset = -1 }
+      opts.sources.providers.buffer = { score_offset = 5 }
+      opts.sources.providers.dictionary = {
+        score_offset = 3,
+        module = "blink-cmp-dictionary",
+        name = "Dict",
+        min_keyword_length = 3,
+        opts = {},
+      }
+
+      -- Configure completion menu
+      opts.completion = opts.completion or {}
+      opts.completion.menu = opts.completion.menu or {}
+      opts.completion.menu.draw = {
+        columns = {
+          { "kind_icon", "label", "label_description", gap = 1 },
+          { "kind", "source_name", gap = 1 },
+        },
+      }
+
+      return opts
+    end,
   },
   {
     "monkoose/neocodeium",
@@ -192,19 +189,7 @@ else
       vim.keymap.set("i", "<A-c>", function() neocodeium.clear() end, { silent = true, noremap = true })
     end,
   },
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = {
-      ensure_installed = { "comment", "markdown_inline", "regex", "python" },
-      auto_install = true,
-      highlight = {
-        enable = false,
-      },
-      indent = {
-        enable = false,
-      },
-    },
-  },
+  -- nvim-treesitter config moved to astrocore.lua for v6
   {
     "lukas-reineke/headlines.nvim", --This plugin adds horizontal highlights for text filetypes, like markdown, orgmode, and neorg
     dependencies = "nvim-treesitter/nvim-treesitter",
@@ -242,6 +227,11 @@ else
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
+    enabled = (function()
+      local is_windows = vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1
+      local has_compiler = vim.fn.executable("cl") == 1 or vim.fn.executable("zig") == 1 or vim.fn.executable("gcc") == 1
+      return not is_windows or has_compiler -- Enable on non-Windows OR Windows with compiler
+    end)(),
     after = "nvim-treesitter",
     dependencies = "nvim-treesitter/nvim-treesitter",
   },
@@ -369,7 +359,7 @@ else
     ---@type oil.SetupOpts
     opts = {},
     -- Optional dependencies
-    dependencies = { { "echasnovski/mini.icons", opts = {} } },
+    dependencies = { { "nvim-mini/mini.icons", opts = {} } }, -- Updated to nvim-mini (v6 requirement)
     init = function() vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" }) end,
     -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
   },
