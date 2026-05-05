@@ -8,6 +8,16 @@ local disabled_plugins = {
     "folke/which-key.nvim",
     enabled = false,
   },
+  {
+    "stevearc/aerial.nvim",
+    opts = {
+      backends = { "lsp", "markdown", "man" }, -- Remove treesitter backend
+      -- Disable treesitter backend to avoid nil node errors
+      treesitter = {
+        update_delay = 300,
+      },
+    },
+  },
 }
 
 if vim.g.vscode then

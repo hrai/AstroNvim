@@ -73,13 +73,8 @@ return {
           vim.env.PATH = msvc_path
         end
       end
-    end
-  end,
-  config = function(plugin, opts)
-    -- Set compiler preference after plugin loads
-    if is_windows and (vim.fn.executable("cl") == 1 or msvc_path) then
+      -- Set compiler preference before plugin loads
       require("nvim-treesitter.install").compilers = { "cl" }
     end
-    -- Don't call setup here - it's handled by astrocore.lua
   end,
 }
