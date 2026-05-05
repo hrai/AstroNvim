@@ -18,63 +18,11 @@ return {
       notifications = true, -- enable notifications at start
     },
     -- Treesitter configuration (v6: moved from plugins to astrocore)
-    -- Conditional: full support on WSL/Linux, conditional on Windows (requires compiler)
-    treesitter = (function()
-      local is_windows = vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1
-
-      -- Function to check for MSVC compiler
-      local function has_msvc()
-        local vs_versions = { "2026", "2022" }
-        local base_path = "C:/Program Files/Microsoft Visual Studio"
-        for _, version in ipairs(vs_versions) do
-          local msvc_base = base_path .. "/" .. version .. "/Professional/VC/Tools/MSVC"
-          if vim.fn.isdirectory(msvc_base) == 1 then
-            local versions = vim.fn.globpath(msvc_base, "*", false, true)
-            if #versions > 0 then
-              return true
-            end
-          end
-        end
-        return false
-      end
-
-      local has_compiler = vim.fn.executable("cl") == 1 or vim.fn.executable("zig") == 1 or vim.fn.executable("gcc") == 1 or has_msvc()
-
-      if is_windows and not has_compiler then
-        -- Windows without compiler: disable treesitter, use Vim syntax
-        return {
-          ensure_installed = {},
-          auto_install = false,
-          highlight = false,
-        }
-      else
-        -- WSL/Linux OR Windows with compiler: full treesitter support
-        return {
-          ensure_installed = is_windows and {} or { "vim", "lua", "comment", "markdown_inline", "regex", "python" },
-          auto_install = not is_windows, -- Disable auto-install on Windows
-          highlight = true,
-          textobjects = {
-            select = {
-              enable = not is_windows, -- Disable textobjects on Windows until parsers are manually installed
-              lookahead = true,
-              keymaps = {
-                ["af"] = "@function.outer",
-                ["if"] = "@function.inner",
-                ["ac"] = "@class.outer",
-                ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
-                ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
-              },
-              selection_modes = {
-                ["@parameter.outer"] = "v",
-                ["@function.outer"] = "V",
-                ["@class.outer"] = "<c-v>",
-              },
-              include_surrounding_whitespace = true,
-            },
-          },
-        }
-      end
-    end)(),
+    treesitter = {
+      ensure_installed = { "vim", "lua", "python", "comment", "markdown_inline", "regex" },
+      auto_install = false,
+      highlight = true,
+    },
     -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
     diagnostics = {
       virtual_text = true,

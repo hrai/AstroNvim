@@ -414,34 +414,12 @@ vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
 
 ----------------------- TELESCOPE CONFIG END -------------------------
 
------------------------ NVIM-TREESITTER CONFIG -------------------------
--- Treesitter: conditional setup for Windows vs WSL/Linux
-local is_windows = vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1
-local has_compiler = vim.fn.executable("cl") == 1 or vim.fn.executable("zig") == 1 or vim.fn.executable("gcc") == 1
-
-if is_windows and not has_compiler then
-  -- Windows without compiler: Use Vim syntax files (treesitter disabled)
-  vim.cmd [[
-    syntax enable
-    syntax on
-    filetype plugin indent on
-  ]]
-elseif is_windows and has_compiler then
-  -- Windows with compiler: Configure treesitter
-  require("nvim-treesitter.install").prefer_git = true
-  if vim.fn.executable("cl") == 1 then
-    require("nvim-treesitter.install").compilers = { "cl" }
-  elseif vim.fn.executable("zig") == 1 then
-    require("nvim-treesitter.install").compilers = { "zig" }
-  else
-    require("nvim-treesitter.install").compilers = { "gcc", "clang" }
-  end
-else
-  -- WSL/Linux: Configure treesitter compiler
-  require("nvim-treesitter.install").prefer_git = true
-  require("nvim-treesitter.install").compilers = { "gcc", "clang" }
-end
------------------------ NVIM-TREESITTER CONFIG END -------------------------
+-- Note: Treesitter config moved to lua/plugins/treesitter.lua and lua/plugins/astrocore.lua (v6)
+-- Fallback to Vim syntax highlighting while parsers are being installed
+vim.cmd [[
+  syntax enable
+  syntax on
+]]
 
 local function get_os_type()
   -- Check for Windows environment variables first
@@ -509,9 +487,8 @@ else
     ]]
 end
 
--- Mason-lspconfig v2 now handles self-registration (v6 migration)
--- Moved ensure_installed to mason-tool-installer in lua/plugins/mason.lua
-require("mason-lspconfig").setup {}
+-- Note: Mason-lspconfig is configured in lua/plugins/mason.lua (v6)
+-- Manual setup() call removed - handled by AstroNvim plugin system
 
 -- Disable NeoCodeium for large files
 vim.api.nvim_create_autocmd("BufReadPre", {
