@@ -174,6 +174,7 @@ nnoremap <F6> gg"+yG
 noremap <C-P> "+p
 inoremap <C-P> <C-R>+
 cnoremap <C-P> <C-R>+<space>
+cnoremap <C-V> <C-R>+
 
 " => Add linebreak without entering insert mode
 nnoremap <F9> o<Esc>
