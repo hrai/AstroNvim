@@ -27,389 +27,394 @@ else
   for _, v in ipairs(disabled_plugins) do
     table.insert(plugins, v)
   end
-  for _, v in ipairs({
-  {
-    "folke/trouble.nvim",
-    cmd = "TroubleToggle",
-  },
-  {
-    "marko-cerovac/material.nvim",
-    lazy = false, -- make sure we load this during startup if it is your main colorscheme
-    priority = 1000, -- make sure to load this before all the other start plugins
-    config = function(_, opts)
-      vim.g.material_style = "deep ocean"
-      require("material").setup(opts)
-      vim.cmd "colorscheme material"
-    end,
-  }, --colorscheme
-  { "Pocco81/auto-save.nvim" },
-  { "tpope/vim-abolish" },
-  { "tpope/vim-repeat" },
-  { "tpope/vim-surround", keys = { "c", "d", "y" } },
-  -- { "kshenoy/vim-signature",         keys = { "m" } }, -- mx - Toggle mark 'x' and display it in the leftmost column
-  { "godlygeek/tabular" },
-  { "preservim/vim-markdown", name = "vim-markdown", ft = "md" },
-  { "tpope/vim-markdown", name = "tpope-markdown", ft = "md" },
-  { "tpope/vim-fugitive" },
-  -- { "tpope/vim-rhubarb" },
-  { "christoomey/vim-tmux-navigator" },
-  { "editorconfig/editorconfig-vim" },
-  { "ggandor/lightspeed.nvim" },
-  { "mg979/vim-visual-multi" },
-  { "elzr/vim-json", ft = "json" },
-  { "justinmk/vim-gtfo" }, --Go to Terminal or File manager
-  { "chrisbra/csv.vim" },
-  {
-    "hat0uma/csvview.nvim",
-    ---@module "csvview"
-    ---@type CsvView.Options
-    opts = {
-      parser = { comments = { "#", "//" } },
-      keymaps = {
-        -- Text objects for selecting fields
-        textobject_field_inner = { "if", mode = { "o", "x" } },
-        textobject_field_outer = { "af", mode = { "o", "x" } },
-        -- Excel-like navigation:
-        -- Use <Tab> and <S-Tab> to move horizontally between fields.
-        -- Use <Enter> and <S-Enter> to move vertically between rows and place the cursor at the end of the field.
-        -- Note: In terminals, you may need to enable CSI-u mode to use <S-Tab> and <S-Enter>.
-        jump_next_field_end = { "<Tab>", mode = { "n", "v" } },
-        jump_prev_field_end = { "<S-Tab>", mode = { "n", "v" } },
-        jump_next_row = { "<Enter>", mode = { "n", "v" } },
-        jump_prev_row = { "<S-Enter>", mode = { "n", "v" } },
+  for _, v in ipairs {
+    {
+      "folke/trouble.nvim",
+      cmd = "TroubleToggle",
+    },
+    {
+      "marko-cerovac/material.nvim",
+      lazy = false, -- make sure we load this during startup if it is your main colorscheme
+      priority = 1000, -- make sure to load this before all the other start plugins
+      config = function(_, opts)
+        vim.g.material_style = "deep ocean"
+        require("material").setup(opts)
+        vim.cmd "colorscheme material"
+      end,
+    }, --colorscheme
+    { "Pocco81/auto-save.nvim" },
+    { "tpope/vim-abolish" },
+    { "tpope/vim-repeat" },
+    { "tpope/vim-surround", keys = { "c", "d", "y" } },
+    -- { "kshenoy/vim-signature",         keys = { "m" } }, -- mx - Toggle mark 'x' and display it in the leftmost column
+    { "godlygeek/tabular" },
+    { "preservim/vim-markdown", name = "vim-markdown", ft = "md" },
+    { "tpope/vim-markdown", name = "tpope-markdown", ft = "md" },
+    { "tpope/vim-fugitive" },
+    -- { "tpope/vim-rhubarb" },
+    { "christoomey/vim-tmux-navigator" },
+    { "editorconfig/editorconfig-vim" },
+    { "ggandor/lightspeed.nvim" },
+    { "mg979/vim-visual-multi" },
+    { "elzr/vim-json", ft = "json" },
+    { "justinmk/vim-gtfo" }, --Go to Terminal or File manager
+    { "chrisbra/csv.vim" },
+    {
+      "hat0uma/csvview.nvim",
+      ---@module "csvview"
+      ---@type CsvView.Options
+      opts = {
+        parser = { comments = { "#", "//" } },
+        keymaps = {
+          -- Text objects for selecting fields
+          textobject_field_inner = { "if", mode = { "o", "x" } },
+          textobject_field_outer = { "af", mode = { "o", "x" } },
+          -- Excel-like navigation:
+          -- Use <Tab> and <S-Tab> to move horizontally between fields.
+          -- Use <Enter> and <S-Enter> to move vertically between rows and place the cursor at the end of the field.
+          -- Note: In terminals, you may need to enable CSI-u mode to use <S-Tab> and <S-Enter>.
+          jump_next_field_end = { "<Tab>", mode = { "n", "v" } },
+          jump_prev_field_end = { "<S-Tab>", mode = { "n", "v" } },
+          jump_next_row = { "<Enter>", mode = { "n", "v" } },
+          jump_prev_row = { "<S-Enter>", mode = { "n", "v" } },
+        },
       },
+      cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
     },
-    cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
-  },
-  { "psliwka/vim-smoothie" }, --Smooth scrolling
-  { "lambdalisue/suda.vim" },
-  { "Almo7aya/openingh.nvim" },
-  {
-    "linrongbin16/gitlinker.nvim",
-    cmd = "GitLink",
-    opts = {},
-    keys = {
-      { "<leader>gy", "<cmd>GitLink<cr>", mode = { "n", "v" }, desc = "Yank git permalink" },
-      { "<leader>gY", "<cmd>GitLink!<cr>", mode = { "n", "v" }, desc = "Open git permalink" },
+    { "psliwka/vim-smoothie" }, --Smooth scrolling
+    { "lambdalisue/suda.vim" },
+    { "Almo7aya/openingh.nvim" },
+    {
+      "linrongbin16/gitlinker.nvim",
+      cmd = "GitLink",
+      opts = {},
+      keys = {
+        { "<leader>gy", "<cmd>GitLink<cr>", mode = { "n", "v" }, desc = "Yank git permalink" },
+        { "<leader>gY", "<cmd>GitLink!<cr>", mode = { "n", "v" }, desc = "Open git permalink" },
+      },
+      -- config = function()
+      --   vim.cmd([[
+      --     " command! Gblame :GitLink!<cr>
+      --   ]])
+      -- end,
     },
-    -- config = function()
-    --   vim.cmd([[
-    --     " command! Gblame :GitLink!<cr>
-    --   ]])
-    -- end,
-  },
-  {
-    "panozzaj/vim-autocorrect",
-    config = function()
-      vim.cmd [[
+    {
+      "panozzaj/vim-autocorrect",
+      config = function()
+        vim.cmd [[
         autocmd filetype * call AutoCorrect()
         ]]
-    end,
-  },
-  {
-    "ethanholz/nvim-lastplace", --Return to last edit position when opening files (You want this!)
-    config = function() require("nvim-lastplace").setup {} end,
-  },
-  { "monaqa/dial.nvim" },
-  { -- override blink.cmp plugin
-    "saghen/blink.cmp", -- Updated to lowercase (v6 requirement)
-    optional = true, -- Mark as optional to avoid circular dependency
-    dependencies = {
-      "saghen/blink.lib", -- Required for blink.cmp v2
-      {
-        "Kaiser-Yang/blink-cmp-dictionary",
-        dependencies = { "nvim-lua/plenary.nvim" },
-      },
+      end,
     },
-    opts = function(_, opts)
-      -- Safely extend the default opts without causing circular dependency
-      opts.keymap = opts.keymap or {}
-      opts.keymap.preset = "default"
-      opts.keymap["<Tab>"] = {
-        function(cmp)
-          if cmp.snippet_active() then
-            return cmp.accept()
-          else
-            return cmp.select_and_accept()
-          end
-        end,
-        "snippet_forward",
-        "fallback",
-      }
-      opts.keymap["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" }
-
-      -- Configure sources
-      opts.sources = opts.sources or {}
-      opts.sources.default = { "buffer", "lsp", "path", "snippets", "dictionary" }
-      opts.sources.providers = opts.sources.providers or {}
-      opts.sources.providers.path = { score_offset = 1 }
-      opts.sources.providers.lsp = { score_offset = 3, fallbacks = {} }
-      opts.sources.providers.snippets = { score_offset = -1 }
-      opts.sources.providers.buffer = { score_offset = 5 }
-      opts.sources.providers.dictionary = {
-        score_offset = 3,
-        module = "blink-cmp-dictionary",
-        name = "Dict",
-        min_keyword_length = 3,
-        opts = {},
-      }
-
-      -- Configure completion menu
-      opts.completion = opts.completion or {}
-      opts.completion.menu = opts.completion.menu or {}
-      opts.completion.menu.draw = {
-        columns = {
-          { "kind_icon", "label", "label_description", gap = 1 },
-          { "kind", "source_name", gap = 1 },
+    {
+      "ethanholz/nvim-lastplace", --Return to last edit position when opening files (You want this!)
+      config = function() require("nvim-lastplace").setup {} end,
+    },
+    { "monaqa/dial.nvim" },
+    { -- override blink.cmp plugin
+      "saghen/blink.cmp", -- Updated to lowercase (v6 requirement)
+      optional = true, -- Mark as optional to avoid circular dependency
+      dependencies = {
+        "saghen/blink.lib", -- Required for blink.cmp v2
+        {
+          "Kaiser-Yang/blink-cmp-dictionary",
+          dependencies = { "nvim-lua/plenary.nvim" },
         },
-      }
+      },
+      opts = function(_, opts)
+        -- Safely extend the default opts without causing circular dependency
+        opts.keymap = opts.keymap or {}
+        opts.keymap.preset = "default"
+        opts.keymap["<Tab>"] = {
+          function(cmp)
+            if cmp.snippet_active() then
+              return cmp.accept()
+            else
+              return cmp.select_and_accept()
+            end
+          end,
+          "snippet_forward",
+          "fallback",
+        }
+        opts.keymap["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" }
 
-      return opts
-    end,
-  },
-  {
-    "monkoose/neocodeium",
-    event = "VeryLazy",
-    config = function()
-      local neocodeium = require "neocodeium"
-      neocodeium.setup {
-        silent = true,
-      }
+        -- Configure sources
+        opts.sources = opts.sources or {}
+        opts.sources.default = { "buffer", "lsp", "path", "snippets", "dictionary" }
+        opts.sources.providers = opts.sources.providers or {}
+        opts.sources.providers.path = { score_offset = 1 }
+        opts.sources.providers.lsp = { score_offset = 3, fallbacks = {} }
+        opts.sources.providers.snippets = { score_offset = -1 }
+        opts.sources.providers.buffer = { score_offset = 5 }
+        opts.sources.providers.dictionary = {
+          score_offset = 3,
+          module = "blink-cmp-dictionary",
+          name = "Dict",
+          min_keyword_length = 3,
+          opts = {},
+        }
 
-      -- Smart Tab: Use blink.cmp if menu is visible, otherwise neocodeium
-      vim.keymap.set("i", "<Tab>", function()
-        local blink = require "blink.cmp"
-        if blink.is_visible() then
-          return blink.select_and_accept()
-        else
-          -- Check if neocodeium has a suggestion
-          if neocodeium.visible() then
-            neocodeium.accept()
-          else
-            -- Fall back to regular tab
-            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, false, true), "n", false)
-          end
-        end
-      end, { silent = true, noremap = true, expr = false })
+        -- Configure completion menu
+        opts.completion = opts.completion or {}
+        opts.completion.menu = opts.completion.menu or {}
+        opts.completion.menu.draw = {
+          columns = {
+            { "kind_icon", "label", "label_description", gap = 1 },
+            { "kind", "source_name", gap = 1 },
+          },
+        }
 
-      -- Alternative keybindings for explicit control
-      vim.keymap.set("i", "<A-a>", function() neocodeium.accept() end, { silent = true, noremap = true })
-      vim.keymap.set("i", "<A-]>", function() neocodeium.cycle_or_complete() end, { silent = true, noremap = true })
-      vim.keymap.set("i", "<A-[>", function() neocodeium.cycle_or_complete(-1) end, { silent = true, noremap = true })
-      vim.keymap.set("i", "<A-c>", function() neocodeium.clear() end, { silent = true, noremap = true })
-    end,
-  },
-  -- nvim-treesitter config moved to astrocore.lua for v6
-  {
-    "lukas-reineke/headlines.nvim", --This plugin adds horizontal highlights for text filetypes, like markdown, orgmode, and neorg
-    dependencies = "nvim-treesitter/nvim-treesitter",
-    config = true, -- or `opts = {}`
-  },
-  {
-    "AckslD/nvim-neoclip.lua", --Clipboard manager neovim plugin with telescope integration
-    dependencies = {
-      { "kkharji/sqlite.lua", module = "sqlite" },
-      { "nvim-telescope/telescope.nvim" },
+        return opts
+      end,
     },
-    after = "telescope",
-    config = function() require("neoclip").setup { default_register = { '"', "+", "*" } } end,
-  },
-  {
-    "airblade/vim-rooter",
-    after = "telescope",
-    config = function()
-      vim.cmd [[
+    {
+      "monkoose/neocodeium",
+      event = "VeryLazy",
+      config = function()
+        local neocodeium = require "neocodeium"
+        neocodeium.setup {
+          silent = true,
+        }
+
+        -- Smart Tab: Use blink.cmp if menu is visible, otherwise neocodeium
+        vim.keymap.set("i", "<Tab>", function()
+          local blink = require "blink.cmp"
+          if blink.is_visible() then
+            return blink.select_and_accept()
+          else
+            -- Check if neocodeium has a suggestion
+            if neocodeium.visible() then
+              neocodeium.accept()
+            else
+              -- Fall back to regular tab
+              vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, false, true), "n", false)
+            end
+          end
+        end, { silent = true, noremap = true, expr = false })
+
+        -- Alternative keybindings for explicit control
+        vim.keymap.set("i", "<A-a>", function() neocodeium.accept() end, { silent = true, noremap = true })
+        vim.keymap.set("i", "<A-]>", function() neocodeium.cycle_or_complete() end, { silent = true, noremap = true })
+        vim.keymap.set("i", "<A-[>", function() neocodeium.cycle_or_complete(-1) end, { silent = true, noremap = true })
+        vim.keymap.set("i", "<A-c>", function() neocodeium.clear() end, { silent = true, noremap = true })
+      end,
+    },
+    -- nvim-treesitter config moved to astrocore.lua for v6
+    {
+      "lukas-reineke/headlines.nvim", --This plugin adds horizontal highlights for text filetypes, like markdown, orgmode, and neorg
+      dependencies = "nvim-treesitter/nvim-treesitter",
+      config = true, -- or `opts = {}`
+    },
+    {
+      "AckslD/nvim-neoclip.lua", --Clipboard manager neovim plugin with telescope integration
+      dependencies = {
+        { "kkharji/sqlite.lua", module = "sqlite" },
+        { "nvim-telescope/telescope.nvim" },
+      },
+      after = "telescope",
+      config = function() require("neoclip").setup { default_register = { '"', "+", "*" } } end,
+    },
+    {
+      "airblade/vim-rooter",
+      after = "telescope",
+      config = function()
+        vim.cmd [[
               let g:rooter_patterns = ['.git', '.svn', 'package.json', '!node_modules']
               let g:rooter_silent_chdir = 1
               let g:rooter_change_directory_for_non_project_files = 'current' "Change to file's directory (similar to autochdir).
               ]]
-    end,
-  },
-  {
-    "nvim-neo-tree/neo-tree.nvim",
-    opts = {
-      filesystem = {
-        filtered_items = {
-          visible = true,
-        },
-      },
+      end,
     },
-  },
-  {
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    enabled = (function()
-      local is_windows = vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1
-      local has_compiler = vim.fn.executable("cl") == 1 or vim.fn.executable("zig") == 1 or vim.fn.executable("gcc") == 1
-      return not is_windows or has_compiler -- Enable on non-Windows OR Windows with compiler
-    end)(),
-    after = "nvim-treesitter",
-    dependencies = "nvim-treesitter/nvim-treesitter",
-  },
-  {
-    "kiyoon/treesitter-indent-object.nvim",
-    keys = {
-      {
-        "ai",
-        "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_outer()<CR>",
-        mode = { "x", "o" },
-        desc = "Select context-aware indent (outer)",
-      },
-      {
-        "aI",
-        "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_outer(true)<CR>",
-        mode = { "x", "o" },
-        desc = "Select context-aware indent (outer, line-wise)",
-      },
-      {
-        "ii",
-        "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_inner()<CR>",
-        mode = { "x", "o" },
-        desc = "Select context-aware indent (inner, partial range)",
-      },
-      {
-        "iI",
-        "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_inner(true)<CR>",
-        mode = { "x", "o" },
-        desc = "Select context-aware indent (inner, entire range)",
-      },
-    },
-  },
-  {
-    "nvimtools/none-ls.nvim",
-    dependencies = {
-      "nvimtools/none-ls-extras.nvim",
-    },
-    opts = function(_, opts)
-      local null_ls = require "null-ls"
-
-      -- opts.debug = true
-      opts.sources = {
-        null_ls.builtins.formatting.stylua,
-        null_ls.builtins.formatting.prettierd.with {
-          filetypes = {
-            "css",
-            "scss",
-            "less",
-            "html",
-            "json",
-            "yaml",
-            "markdown",
-            "graphql",
+    {
+      "nvim-neo-tree/neo-tree.nvim",
+      opts = {
+        filesystem = {
+          filtered_items = {
+            visible = true,
           },
         },
-        require "none-ls.diagnostics.eslint_d",
-        null_ls.builtins.completion.spell,
-      }
-      return opts
-    end,
-  },
-  {
-    "nvim-neo-tree/neo-tree.nvim",
-    init = function()
-      -- global
-      vim.api.nvim_set_keymap("n", "<leader>e", ":Neotree<cr>", { silent = true, noremap = true })
-    end,
-  },
-  {
-    "mbbill/undotree",
-    init = function() vim.api.nvim_set_keymap("n", "<F5>", ":UndotreeToggle<cr>", { silent = true, noremap = true }) end,
-  },
-  {
-    "folke/snacks.nvim",
-    opts = {
-      dashboard = {
-        preset = {
-          header = table.concat({
-            " █████  ███████ ████████ ██████   ██████ ",
-            "██   ██ ██         ██    ██   ██ ██    ██",
-            "███████ ███████    ██    ██████  ██    ██",
-            "██   ██      ██    ██    ██   ██ ██    ██",
-            "██   ██ ███████    ██    ██   ██  ██████ ",
-            "",
-            "███    ██ ██    ██ ██ ███    ███",
-            "████   ██ ██    ██ ██ ████  ████",
-            "██ ██  ██ ██    ██ ██ ██ ████ ██",
-            "██  ██ ██  ██  ██  ██ ██  ██  ██",
-            "██   ████   ████   ██ ██      ██",
-          }, "\n"),
+      },
+    },
+    {
+      "nvim-treesitter/nvim-treesitter-textobjects",
+      enabled = (function()
+        local is_windows = vim.fn.has "win32" == 1 or vim.fn.has "win64" == 1
+        local has_compiler = vim.fn.executable "cl" == 1 or vim.fn.executable "zig" == 1 or vim.fn.executable "gcc" == 1
+        return not is_windows or has_compiler -- Enable on non-Windows OR Windows with compiler
+      end)(),
+      after = "nvim-treesitter",
+      dependencies = "nvim-treesitter/nvim-treesitter",
+    },
+    {
+      "kiyoon/treesitter-indent-object.nvim",
+      keys = {
+        {
+          "ai",
+          "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_outer()<CR>",
+          mode = { "x", "o" },
+          desc = "Select context-aware indent (outer)",
+        },
+        {
+          "aI",
+          "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_outer(true)<CR>",
+          mode = { "x", "o" },
+          desc = "Select context-aware indent (outer, line-wise)",
+        },
+        {
+          "ii",
+          "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_inner()<CR>",
+          mode = { "x", "o" },
+          desc = "Select context-aware indent (inner, partial range)",
+        },
+        {
+          "iI",
+          "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_inner(true)<CR>",
+          mode = { "x", "o" },
+          desc = "Select context-aware indent (inner, entire range)",
+        },
+      },
+    },
+    {
+      "nvimtools/none-ls.nvim",
+      dependencies = {
+        "nvimtools/none-ls-extras.nvim",
+      },
+      opts = function(_, opts)
+        local null_ls = require "null-ls"
 
-          keys = {
-            { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
-            { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
-            { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
-            { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
-            {
-              icon = " ",
-              key = "c",
-              desc = "Config",
-              action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
+        -- opts.debug = true
+        opts.sources = {
+          null_ls.builtins.formatting.stylua,
+          null_ls.builtins.formatting.prettierd.with {
+            filetypes = {
+              "css",
+              "scss",
+              "less",
+              "html",
+              "json",
+              "yaml",
+              "markdown",
+              "graphql",
             },
-            { icon = " ", key = "s", desc = "Restore Session", section = "session" },
-            { icon = "󰒲 ", key = "L", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
-            { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+          },
+          require "none-ls.diagnostics.eslint_d",
+          null_ls.builtins.completion.spell,
+        }
+        return opts
+      end,
+    },
+    {
+      "nvim-neo-tree/neo-tree.nvim",
+      init = function()
+        -- global
+        vim.api.nvim_set_keymap("n", "<leader>e", ":Neotree<cr>", { silent = true, noremap = true })
+      end,
+    },
+    {
+      "mbbill/undotree",
+      init = function() vim.api.nvim_set_keymap("n", "<F5>", ":UndotreeToggle<cr>", { silent = true, noremap = true }) end,
+    },
+    {
+      "folke/snacks.nvim",
+      opts = {
+        dashboard = {
+          preset = {
+            header = table.concat({
+              " █████  ███████ ████████ ██████   ██████ ",
+              "██   ██ ██         ██    ██   ██ ██    ██",
+              "███████ ███████    ██    ██████  ██    ██",
+              "██   ██      ██    ██    ██   ██ ██    ██",
+              "██   ██ ███████    ██    ██   ██  ██████ ",
+              "",
+              "███    ██ ██    ██ ██ ███    ███",
+              "████   ██ ██    ██ ██ ████  ████",
+              "██ ██  ██ ██    ██ ██ ██ ████ ██",
+              "██  ██ ██  ██  ██  ██ ██  ██  ██",
+              "██   ████   ████   ██ ██      ██",
+            }, "\n"),
+
+            keys = {
+              { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+              { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
+              { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
+              { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
+              {
+                icon = " ",
+                key = "c",
+                desc = "Config",
+                action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
+              },
+              { icon = " ", key = "s", desc = "Restore Session", section = "session" },
+              { icon = "󰒲 ", key = "L", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
+              { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+            },
           },
         },
       },
     },
-  },
-  {
-    "jvgrootveld/telescope-zoxide",
-    dependencies = {
-      { "nvim-telescope/telescope.nvim" },
+    {
+      "jvgrootveld/telescope-zoxide",
+      dependencies = {
+        { "nvim-telescope/telescope.nvim" },
+      },
+      after = "telescope",
+      config = function()
+        require("telescope").load_extension "zoxide"
+        vim.keymap.set("n", "<leader>cd", require("telescope").extensions.zoxide.list)
+      end,
     },
-    after = "telescope",
-    config = function()
-      require("telescope").load_extension "zoxide"
-      vim.keymap.set("n", "<leader>cd", require("telescope").extensions.zoxide.list)
-    end,
-  },
-  {
-    "stevearc/oil.nvim",
-    ---@module 'oil'
-    ---@type oil.SetupOpts
-    opts = {},
-    -- Optional dependencies
-    dependencies = { { "nvim-mini/mini.icons", opts = {} } }, -- Updated to nvim-mini (v6 requirement)
-    init = function() vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" }) end,
-    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
-  },
-  {
-    "ThePrimeagen/harpoon",
-    branch = "harpoon2",
-    dependencies = { "nvim-lua/plenary.nvim" },
-  },
-  {
-    "OXY2DEV/markview.nvim",
-    ft = "markdown", -- If you decide to lazy-load anyway
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "nvim-tree/nvim-web-devicons",
+    {
+      "stevearc/oil.nvim",
+      ---@module 'oil'
+      ---@type oil.SetupOpts
+      opts = {},
+      -- Optional dependencies
+      dependencies = { { "nvim-mini/mini.icons", opts = {} } }, -- Updated to nvim-mini (v6 requirement)
+      init = function() vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" }) end,
+      -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
     },
-  },
-  {
-    "gaoDean/autolist.nvim",
-    ft = {
-      "markdown",
-      "text",
-      "tex",
-      "plaintex",
+    {
+      "ThePrimeagen/harpoon",
+      branch = "harpoon2",
+      dependencies = { "nvim-lua/plenary.nvim" },
     },
-    config = function()
-      local autolist = require("autolist")
-      autolist.setup({})
+    {
+      "OXY2DEV/markview.nvim",
+      ft = "markdown", -- If you decide to lazy-load anyway
+      dependencies = {
+        "nvim-treesitter/nvim-treesitter",
+        "nvim-tree/nvim-web-devicons",
+      },
+    },
+    {
+      "gaoDean/autolist.nvim",
+      ft = {
+        "markdown",
+        "text",
+        "notes",
+        "txt",
+      },
+      config = function()
+        local autolist = require "autolist"
+        autolist.setup {}
 
-      vim.keymap.set("i", "<tab>", "<cmd>AutolistTab<cr>", { buffer = true })
-      vim.keymap.set("i", "<s-tab>", "<cmd>AutolistShiftTab<cr>", { buffer = true })
-      vim.keymap.set("i", "<CR>", "<CR><cmd>AutolistNewBullet<cr>", { buffer = true })
-      vim.keymap.set("n", "o", "o<cmd>AutolistNewBullet<cr>", { buffer = true })
-      vim.keymap.set("n", "O", "O<cmd>AutolistNewBulletBefore<cr>", { buffer = true })
-      vim.keymap.set("n", "<CR>", "<cmd>AutolistToggleCheckbox<cr><CR>", { buffer = true })
-      vim.keymap.set("n", "<C-r>", "<cmd>AutolistRecalculate<cr>", { buffer = true })
-      vim.keymap.set("n", "<leader>cn", autolist.cycle_next_dr, { expr = true, buffer = true })
-      vim.keymap.set("n", "<leader>cp", autolist.cycle_prev_dr, { expr = true, buffer = true })
-    end,
+        vim.keymap.set("i", "<tab>", "<cmd>AutolistTab<cr>", { buffer = true })
+        vim.keymap.set("i", "<s-tab>", "<cmd>AutolistShiftTab<cr>", { buffer = true })
+        vim.keymap.set("i", "<CR>", "<CR><cmd>AutolistNewBullet<cr>", { buffer = true })
+        vim.keymap.set("n", "o", "o<cmd>AutolistNewBullet<cr>", { buffer = true })
+        vim.keymap.set("n", "O", "O<cmd>AutolistNewBulletBefore<cr>", { buffer = true })
+        vim.keymap.set("n", "<CR>", "<cmd>AutolistToggleCheckbox<cr><CR>", { buffer = true })
+        vim.keymap.set("n", "<C-r>", "<cmd>AutolistRecalculate<cr>", { buffer = true })
+        vim.keymap.set("n", "<leader>cn", autolist.cycle_next_dr, { expr = true, buffer = true })
+        vim.keymap.set("n", "<leader>cp", autolist.cycle_prev_dr, { expr = true, buffer = true })
+      end,
+    },
+  {
+    "windwp/nvim-autopairs",
+    event = "VeryLazy",
+    opts = {},
   },
-  }) do
+  } do
     table.insert(plugins, v)
   end
   return plugins
