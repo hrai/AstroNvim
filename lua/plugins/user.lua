@@ -392,35 +392,35 @@ else
         "markdown",
         "text",
         "notes",
+        "Notes",
         "txt",
       },
       config = function()
-        local autolist = require "autolist"
-        autolist.setup {}
-
-        
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = { "markdown", "text", "notes", "txt" },
-        callback = function()
-          vim.keymap.set("i", "<tab>", "<cmd>AutolistTab<cr>", { buffer = true })
-          vim.keymap.set("i", "<s-tab>", "<cmd>AutolistShiftTab<cr>", { buffer = true })
-          vim.keymap.set("i", "<CR>", "<CR><cmd>AutolistNewBullet<cr>", { buffer = true })
-          vim.keymap.set("n", "o", "o<cmd>AutolistNewBullet<cr>", { buffer = true })
-          vim.keymap.set("n", "O", "O<cmd>AutolistNewBulletBefore<cr>", { buffer = true })
-          vim.keymap.set("n", "<CR>", "<cmd>AutolistToggleCheckbox<cr><CR>", { buffer = true })
-          vim.keymap.set("n", "<C-r>", "<cmd>AutolistRecalculate<cr>", { buffer = true })
-          vim.keymap.set("n", "<leader>cn", autolist.cycle_next_dr, { expr = true, buffer = true })
-          vim.keymap.set("n", "<leader>cp", autolist.cycle_prev_dr, { expr = true, buffer = true })
-      
-        end,
-      })
-    end,
+        require("autolist").setup({})
+      end,
+      init = function()
+        vim.api.nvim_create_autocmd("FileType", {
+          pattern = { "markdown", "text", "notes", "Notes", "txt" },
+          callback = function()
+            local autolist = require("autolist")
+            vim.keymap.set("i", "<tab>", "<cmd>AutolistTab<cr>", { buffer = true })
+            vim.keymap.set("i", "<s-tab>", "<cmd>AutolistShiftTab<cr>", { buffer = true })
+            vim.keymap.set("i", "<CR>", "<CR><cmd>AutolistNewBullet<cr>", { buffer = true })
+            vim.keymap.set("n", "o", "o<cmd>AutolistNewBullet<cr>", { buffer = true })
+            vim.keymap.set("n", "O", "O<cmd>AutolistNewBulletBefore<cr>", { buffer = true })
+            vim.keymap.set("n", "<CR>", "<cmd>AutolistToggleCheckbox<cr><CR>", { buffer = true })
+            vim.keymap.set("n", "<C-r>", "<cmd>AutolistRecalculate<cr>", { buffer = true })
+            vim.keymap.set("n", "<leader>cn", autolist.cycle_next_dr, { expr = true, buffer = true })
+            vim.keymap.set("n", "<leader>cp", autolist.cycle_prev_dr, { expr = true, buffer = true })
+          end,
+        })
+      end,
     },
-  {
-    "windwp/nvim-autopairs",
-    event = "VeryLazy",
-    opts = {},
-  },
+    {
+      "windwp/nvim-autopairs",
+      event = "VeryLazy",
+      opts = {},
+    },
   } do
     table.insert(plugins, v)
   end
