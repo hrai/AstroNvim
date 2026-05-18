@@ -396,7 +396,26 @@ else
       },
       config = function()
         require("autolist").setup({
-          enabled_filetypes = { "markdown", "text", "notes", "txt" },
+          lists = {
+            markdown = {
+              "[-+*]", -- - + *
+              "%d+[.)]", -- 1. 2. 3.
+              "%a[.)]", -- a) b) c)
+              "%u+[.)]", -- I. II. III.
+            },
+            text = {
+              "[-+*]",
+              "%d+[.)]",
+              "%a[.)]",
+              "%u+[.)]",
+            },
+            txt = {
+              "[-+*]",
+              "%d+[.)]",
+              "%a[.)]",
+              "%u+[.)]",
+            },
+          },
         })
         
         vim.api.nvim_create_autocmd("FileType", {
