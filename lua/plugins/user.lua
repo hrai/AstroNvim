@@ -394,12 +394,13 @@ else
         "notes",
         "txt",
       },
-      config = function() require("autolist").setup {} end,
-      init = function()
+      config = function()
+        require("autolist").setup({})
+        
         vim.api.nvim_create_autocmd("FileType", {
           pattern = { "markdown", "text", "notes", "txt" },
           callback = function()
-            local autolist = require "autolist"
+            local autolist = require("autolist")
             vim.keymap.set("i", "<tab>", "<cmd>AutolistTab<cr>", { buffer = true })
             vim.keymap.set("i", "<s-tab>", "<cmd>AutolistShiftTab<cr>", { buffer = true })
             vim.keymap.set("i", "<CR>", "<CR><cmd>AutolistNewBullet<cr>", { buffer = true })
