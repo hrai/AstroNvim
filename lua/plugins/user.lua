@@ -395,7 +395,9 @@ else
         "txt",
       },
       config = function()
-        require("autolist").setup({})
+        require("autolist").setup({
+          enabled_filetypes = { "markdown", "text", "notes", "txt" },
+        })
         
         vim.api.nvim_create_autocmd("FileType", {
           pattern = { "markdown", "text", "notes", "txt" },
